@@ -10,7 +10,7 @@ using CSV
 using DataFrames
 
 
-function MonteCarlo_epsilon_mean_std(A::AbstractMatrix{<:Real}, num_samples::Int) # This matrix may be squared and symmetric
+function MonteCarlo_epsilon_mean_std(A::AbstractMatrix{<:Real}, num_samples::Int) # This matrix may be binary and symmetric
     n = size(A, 1) # Number of vertices
     A_dense = Matrix{Float64}(A) # Convert the adjacency matrix to a dense format for faster access
     mean_epsilon = 0.0 # Initialize the mean
@@ -62,25 +62,33 @@ num_runs = 20
 num_samples = 100000
 k=2
 
-sizes = [100, 150, 200, 250, 300, 350, 400]
-n_plot = collect(100:100:2000)
+# =========================
+# Theoretical mean and std for different sizes
+# =========================
+
+sizes = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+n_plot = collect(10:100)
+n_plot = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
 theoretical_means = Float64[]
 theoretical_stds = Float64[]
 for size in n_plot
     #k = 2 * round(Int, 0.101*(size-1)/2)
     #g = erdos_renyi(size, p, seed=1) # Erdos-Renyi graph 
     #g = watts_strogatz(size, k, p; seed=10) # Watts-Strogatz graph 
-    g = static_scale_free(size, round(Int, 0.3*size*(size-1)/2), 2, seed=1)
-    #g = barabasi_albert(size, k, seed=1) # Barabasi-Albert graph
+    g = barabasi_albert(size, k, seed=1) # Barabasi-Albert graph
     A = adjacency_matrix(g)
     theoretical_mean, theoretical_std = theoretical_mean_std(A)
     push!(theoretical_means, theoretical_mean)
     push!(theoretical_stds, theoretical_std)
 end
 data = hcat(n_plot, theoretical_means, theoretical_stds)
-writedlm("Divergence/t_config_2.csv", data, ',')
+writedlm("Divergence/BA_2_t.csv", data, ',')
 
-"""
+# =========================
+# Monte Carlo mean and std for different sizes
+# =========================
+
+
 MC_means = zeros(Float64, length(sizes))
 MC_stds = zeros(Float64, length(sizes))
 MC_errors_mean = zeros(Float64, length(sizes))
@@ -91,8 +99,7 @@ MC_errors_std = zeros(Float64, length(sizes))
         size = sizes[idx]
         #g = erdos_renyi(size, p, seed=1)
         #g = watts_strogatz(size, k, p; seed=10)
-        #g = barabasi_albert(size, k, seed=1)
-        g = static_scale_free(size, round(Int, 0.3*size*(size-1)/2), 2, seed=1)
+        g = barabasi_albert(size, k, seed=1)
         A = adjacency_matrix(g)
         mean_epsilon, std_epsilon, error_mean, error_std = MonteCarlo_epsilon_mean_std(A, num_samples)
         
@@ -104,5 +111,9 @@ MC_errors_std = zeros(Float64, length(sizes))
     println("Time taken to size $(size): ", time_taken, " seconds")
 end
 data = hcat(sizes, MC_means, MC_stds, MC_errors_mean, MC_errors_std)
-writedlm("Divergence/mc_config_2.csv", data, ',')
-"""
+writedlm("Divergence/BA_2.csv", data, ',')
+
+ERROR = abs.(MC_stds .- theoretical_stds) ./ MC_errors_std
+
+data = hcat(sizes, ERROR)
+writedlm("Divergence/BA_2_error.csv", data, ',')
