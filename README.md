@@ -12,39 +12,54 @@ Each folder corresponds to a section of the thesis.
 |---|---|---|
 | `3. ALGORITHMS/` | Sec. 3 | The three counting algorithms |
 | ├ `Brute Force.jl` | 3.1 | Exhaustive enumeration of the $n!$ permutations |
-| ├ `Monte Carlo.jl` | 3.1 | Uniform sampling of the permutation space |
-| └ `BRANCH AND BOUND/` | 3.1 | Branch and bound, in its simple, directed and weighted variants |
+| ├ `Monte Carlo.jl` | 3.2 | Uniform sampling of the permutation space |
+| └ `BRANCH AND BOUND/` | 3.3 | Branch and bound, in its simple, directed and weighted variants |
 | `4.2. CONCENTRATION OF THE MEASURE/` | Sec. 4.2 | Sampled vs. theoretical mean and variance of the energy |
 | `4.3. SYNTHETIC/` | Sec. 4.3 | Perturbed rings (4.3.1) and Watts-Strogatz networks (4.3.2) |
 | `4.4 EMPIRICAL/` | Sec. 4.4 | ε-automorphism curves for simple and directed empirical networks |
 | `4.5. CLUSTER SYNCHRONIZATION/` | Sec. 4.5 | Coupled-map simulations on the ε-orbit partitions |
 
-## ALGORITHMS TO COUNT APPROXIMATE SYMMETRIES
+## 3. ALGORITHMS TO COUNT APPROXIMATE SYMMETRIES
 
-In the folder 3. ALGORITHMS, you will find the three approaches developed to compute the epsilon-automorphism curve: 
+In the folder `3. ALGORITHMS` you will find the three approaches developed to compute the ε-automorphism curve.
 
-### 3.1. Brute Force
+### 3.1. Brute force
 
-It includes the function to compute the curve in simple, directed and weighted networks, as well as the function to compute the orbits. T
-To call the function you must include: 
+This code contains the function that computes the curve for simple, directed and weighted
+networks, as well as the function that computes the orbits.
 
-Brute_Force(A::(Adjacency matrix of the network), Directed(true or false), Undirected(true or false))
+The function is called as:
+
+```julia
+Brute_Force(A, Directed, Weighted)
+```
+
+where `A` is the adjacency matrix of the network, and `Directed` and `Weighted` are booleans.
 
 It returns:
-- For the unweighted case: the vector of epsilons, the histogram energies, the CDF of the energies (the epsilon-automorphisms) and the first_bin matrix (used to compute the orbits).
-- For the weighted case: the vector of epsilons with at least one permutation, the CDF of the energies (the epsilon-automorphisms) and the first_bin matrix (used to compute the orbits).
 
-To compute the orbits we call to the function compute_orbits(first_bin, epsilon_bins) (if the network is weighted, we call compute_orbits_weighted(first_bin, epsilons)). It returns the orbits for each epsilon. 
+- **Unweighted case:** the vector of epsilons, the histogram of energies, the CDF of the
+  energies (i.e. the ε-automorphisms) and the `first_bin` matrix, which is used to compute
+  the orbits.
+- **Weighted case:** the vector of epsilons with at least one permutation, the CDF of the
+  energies (the ε-automorphisms) and the `first_bin` matrix.
 
+The orbits are obtained by calling `compute_orbits(first_bin, epsilon_bins)`, or
+`compute_orbits_weighted(first_bin, epsilons)` if the network is weighted. Both return the
+orbits for each epsilon.
 
-### 3.1 Monte Carlo
+### 3.2. Monte Carlo
 
+The Monte Carlo function returns the mean value and the standard deviation of the energy.
+It takes the adjacency matrix of a simple graph and the number of samples:
 
-The Monte Carlo function returns the mean value and standard deviation of the energy. We must entry with an adjacency matrix of a simple graph by introducing the matrix and the number of samples:
+```julia
+MonteCarlo_epsilon_mean_std(A, num_samples)
+```
 
-MonteCarlo_epsilon_mean_std(A(Adjacency matrix), num_samples(number of samples))
+It returns the mean energy, the standard deviation, and the Monte Carlo error of both.
 
-It returns the mean energy, the standard deviation and the Monte Carlo Error of both of them.
+### 3.
 
 
 
