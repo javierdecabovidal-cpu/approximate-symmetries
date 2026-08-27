@@ -98,4 +98,4 @@ Here the orbits are computed inside the function, so `compute_orbits` does not h
 
 ### The rest of the code
 
-
+The rest of the code correspond to the application of these algorithms to perform the experiment described in the thesis. 
