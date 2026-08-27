@@ -23,7 +23,7 @@ Each folder corresponds to a section of the thesis.
 
 In the folder 3. ALGORITHMS, you will find the three approaches developed to compute the epsilon-automorphism curve: 
 
-3.1. Brute Force
+# 3.1. Brute Force
 
 It includes the function to compute the curve in simple, directed and weighted networks, as well as the function to compute the orbits. T
 To call the function you must include: 
@@ -37,6 +37,14 @@ It returns:
 To compute the orbits we call to the function compute_orbits(first_bin, epsilon_bins) (if the network is weighted, we call compute_orbits_weighted(first_bin, epsilons)). It returns the orbits for each epsilon. 
 
 
+# 3.1 Monte Carlo
+
+
+The Monte Carlo function returns the mean value and standard deviation of the energy. We must entry with an adjacency matrix of a simple graph by introducing the matrix and the number of samples:
+
+MonteCarlo_epsilon_mean_std(A(Adjacency matrix), num_samples(number of samples))
+
+It returns the mean energy, the standard deviation and the Monte Carlo Error of both of them.
 
 
 
