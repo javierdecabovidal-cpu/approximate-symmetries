@@ -18,3 +18,11 @@ Each folder corresponds to a section of the thesis.
 | `4.3. SYNTHETIC/` | Sec. 4.3 | Perturbed rings (4.3.1) and Watts-Strogatz networks (4.3.2) |
 | `4.4 EMPIRICAL/` | Sec. 4.4 | ε-automorphism curves for simple and directed empirical networks |
 | `4.5. CLUSTER SYNCHRONIZATION/` | Sec. 4.5 | Coupled-map simulations on the ε-orbit partitions |
+
+## ALGORITHMS TO COUNT APPROXIMATE SYMMETRIES
+
+In the folder 3. ALGORITHMS, you will find the three approaches developed to compute the epsilon-automorphism curve: 
+
+3.1. Brute Force
+
+It includes the function to compute the curve in simple (epsilon_aut) directed (epsilon_aut_directed) and weighted (epsilon_aut_weighted). The three functions must be called with the adjacency matrix A of the network. 
