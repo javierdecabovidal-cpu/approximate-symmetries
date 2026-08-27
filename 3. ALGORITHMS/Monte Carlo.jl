@@ -10,7 +10,7 @@ using CSV
 using DataFrames
 
 
-function MonteCarlo_epsilon_mean_std(A::AbstractMatrix{<:Real}, num_samples::Int) # This matrix may be whatever category of matrix, but it should be square and symmetric.
+function MonteCarlo_epsilon_mean_std(A::AbstractMatrix{<:Real}, num_samples::Int) # This matrix may be squared and symmetric
     n = size(A, 1) # Number of vertices
     A_dense = Matrix{Float64}(A) # Convert the adjacency matrix to a dense format for faster access
     mean_epsilon = 0.0 # Initialize the mean
