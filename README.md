@@ -25,4 +25,18 @@ In the folder 3. ALGORITHMS, you will find the three approaches developed to com
 
 3.1. Brute Force
 
-It includes the function to compute the curve in simple (epsilon_aut) directed (epsilon_aut_directed) and weighted (epsilon_aut_weighted). The three functions must be called with the adjacency matrix A of the network. 
+It includes the function to compute the curve in simple, directed and weighted networks, as well as the function to compute the orbits. T
+To call the function you must include: 
+
+Brute_Force(A::(Adjacency matrix of the network), Directed(true or false), Undirected(true or false))
+
+It returns:
+- For the unweighted case: the vector of epsilons, the histogram energies, the CDF of the energies (the epsilon-automorphisms) and the first_bin matrix (used to compute the orbits).
+- For the weighted case: the vector of epsilons with at least one permutation, the CDF of the energies (the epsilon-automorphisms) and the first_bin matrix (used to compute the orbits).
+
+To compute the orbits we call to the function compute_orbits(first_bin, epsilon_bins) (if the network is weighted, we call compute_orbits_weighted(first_bin, epsilons)). It returns the orbits for each epsilon. 
+
+
+
+
+
