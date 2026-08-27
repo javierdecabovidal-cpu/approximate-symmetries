@@ -87,8 +87,7 @@ For weighted networks:
 epsilon_aut_ponderado(W, epsilon_max)
 ```
 
-where `W` is the weight matrix, which has to be square and symmetric. Here the energy is the sum of the squared differences of the weights, divided by `n(n-1)`, so it no longer falls on a fixed grid. The nodes are sorted by strength, and the degree bound of the unweighted case is replaced by a bound on the weights. There is also an optional argument, `epsilon_aut_ponderado(W, epsilon_max; max_complete = 10^7)`, that stops the run with an error if a thread finds more complete permutations than that, which is useful when `epsilon_max` turns out to be too large.
-
+where `W` is the weight matrix, which has to be square and symmetric. Here the energy is the sum of the squared differences of the weights, divided by `n(n-1)`, so it no longer falls on a fixed grid. The nodes are sorted by strength, and the degree bound of the unweighted case is replaced by a bound on the weights. 
 The three functions return the same three things:
 
 - `epsilon_bins`: the values of epsilon. For simple and directed networks it is the full grid; for weighted ones it only contains the energies that actually appear, in increasing order.
@@ -97,11 +96,4 @@ The three functions return the same three things:
 
 Here the orbits are computed inside the function, so `compute_orbits` does not have to be called separately.
 
-For simple and directed networks, only the values with `epsilon_bins[k] <= epsilon_max` mean anything: past that point everything has been pruned and the curve stays flat. `orbits` is already cut there, so the other two can be cut as well:
 
-```julia
-k_max = length(orbits)
-epsilon_bins, aut_eps = epsilon_bins[1:k_max], aut_eps[1:k_max]
-```
-
-Each run prints how many branches were pruned before the search starts, how many tasks and threads are used, how many permutations were completed and pruned, and the time it took.
