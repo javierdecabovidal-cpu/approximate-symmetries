@@ -81,7 +81,7 @@ end
 #     coste_adyacencia_parcia
 # (2) Cota inferior por grados: calculamos el mínimo posible coste
 #     adicional para completar las posiciones k...n usando solo
-#     diferencias de grado. Si coste_grados_parcial + cota_k > cost_max,
+#     diferencias de grado. Si coste_grados_parcial + cota_inferior_restante_grado > cost_max,
 #     descartamos toda la rama sin probar ningún candidato.
 #
 # Ambos criterios se aplican independientemente: basta con que uno
